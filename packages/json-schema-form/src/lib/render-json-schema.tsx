@@ -1,10 +1,12 @@
-import { IRenderProps } from "./types";
+import { SchemaRenderer } from "./types";
 import { RenderField } from "./render-field";
 import { RenderJsonObject } from "./render-object-schema";
 import { RenderJsonPrimitive } from "./render-json-primitive";
 import { RenderArrayObject } from "./render-array-schema";
 
-export function RenderJsonSchema(props: IRenderProps) {
+export const RenderJsonSchema: SchemaRenderer<{ pathPrefix?: string; required?: boolean }> = (
+  props
+) => {
   const { form, schema, ...options } = props;
 
   if (schema["x-field-type"] && options.pathPrefix) {
@@ -37,4 +39,4 @@ export function RenderJsonSchema(props: IRenderProps) {
     default:
       return null;
   }
-}
+};

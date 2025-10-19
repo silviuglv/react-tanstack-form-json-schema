@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AppFieldExtendedReactFormApi } from "@tanstack/react-form";
-import { ComponentType } from "react";
+import {
+  AppFieldExtendedReactFormApi,
+  FormAsyncValidateOrFn,
+  FormValidateOrFn,
+} from "@tanstack/react-form";
+import { ComponentType, ReactNode } from "react";
 
 /**
  * https://www.learnjsonschema.com/2020-12
@@ -143,28 +147,79 @@ export type JSONSchema = JSONSchemaCommon &
     | JSONSchemaObject
   );
 
-export interface IRenderProps {
-  form: NoInfer<FormApi>;
+export interface IRenderProps<
+  TFormData = any,
+  TOnMount extends undefined | FormValidateOrFn<TFormData> = any,
+  TOnChange extends undefined | FormValidateOrFn<TFormData> = any,
+  TOnChangeAsync extends undefined | FormAsyncValidateOrFn<TFormData> = any,
+  TOnBlur extends undefined | FormValidateOrFn<TFormData> = any,
+  TOnBlurAsync extends undefined | FormAsyncValidateOrFn<TFormData> = any,
+  TOnSubmit extends undefined | FormValidateOrFn<TFormData> = any,
+  TOnSubmitAsync extends undefined | FormAsyncValidateOrFn<TFormData> = any,
+  TOnDynamic extends undefined | FormValidateOrFn<TFormData> = any,
+  TOnDynamicAsync extends undefined | FormAsyncValidateOrFn<TFormData> = any,
+  TOnServer extends undefined | FormAsyncValidateOrFn<TFormData> = any,
+  TSubmitMeta = any,
+  TFieldComponents extends Record<string, ComponentType<any>> = Record<string, ComponentType<any>>,
+  TFormComponents extends Record<string, ComponentType<any>> = Record<string, ComponentType<any>>,
+> {
+  form: AppFieldExtendedReactFormApi<
+    TFormData,
+    TOnMount,
+    TOnChange,
+    TOnChangeAsync,
+    TOnBlur,
+    TOnBlurAsync,
+    TOnSubmit,
+    TOnSubmitAsync,
+    TOnDynamic,
+    TOnDynamicAsync,
+    TOnServer,
+    TSubmitMeta,
+    TFieldComponents,
+    TFormComponents
+  >;
   schema: JSONSchema;
   pathPrefix?: string;
   required?: boolean;
 }
 
-export type FormApi<
-  TComponents extends Record<string, ComponentType<any>> = Record<string, ComponentType<any>>,
-> = AppFieldExtendedReactFormApi<
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  any,
-  TComponents,
-  TComponents
->;
+export type SchemaRenderer<
+  TProps extends Record<string, unknown> = Record<string, unknown>,
+  TSchema extends JSONSchema = JSONSchema,
+> = <
+  TFormData,
+  TOnMount extends undefined | FormValidateOrFn<TFormData>,
+  TOnChange extends undefined | FormValidateOrFn<TFormData>,
+  TOnChangeAsync extends undefined | FormAsyncValidateOrFn<TFormData>,
+  TOnBlur extends undefined | FormValidateOrFn<TFormData>,
+  TOnBlurAsync extends undefined | FormAsyncValidateOrFn<TFormData>,
+  TOnSubmit extends undefined | FormValidateOrFn<TFormData>,
+  TOnSubmitAsync extends undefined | FormAsyncValidateOrFn<TFormData>,
+  TOnDynamic extends undefined | FormValidateOrFn<TFormData>,
+  TOnDynamicAsync extends undefined | FormAsyncValidateOrFn<TFormData>,
+  TOnServer extends undefined | FormAsyncValidateOrFn<TFormData>,
+  TSubmitMeta,
+  TFieldComponents extends Record<string, ComponentType<any>>,
+  TFormComponents extends Record<string, ComponentType<any>>,
+>(
+  props: {
+    form: AppFieldExtendedReactFormApi<
+      TFormData,
+      TOnMount,
+      TOnChange,
+      TOnChangeAsync,
+      TOnBlur,
+      TOnBlurAsync,
+      TOnSubmit,
+      TOnSubmitAsync,
+      TOnDynamic,
+      TOnDynamicAsync,
+      TOnServer,
+      TSubmitMeta,
+      TFieldComponents,
+      TFormComponents
+    >;
+    schema: TSchema;
+  } & TProps
+) => ReactNode;

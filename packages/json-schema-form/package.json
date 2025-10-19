@@ -7,8 +7,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "lint": "eslint .",
-    "test": "vitest run",
-    "dev": "vitest dev"
+    "test": "vitest run"
   },
   "peerDependencies": {
     "react": "^19.2",

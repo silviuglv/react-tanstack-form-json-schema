@@ -2,7 +2,7 @@ import type { FC, PropsWithChildren } from "react";
 import { createFormHook } from "@tanstack/react-form";
 import { fieldContext, formContext, useFormContext } from "./context/form-context";
 import z from "zod";
-import { RenderJsonSchema, type FormApi, type JSONSchema } from "@repo/json-schema-form";
+import { RenderJsonSchema, type JSONSchema } from "@repo/json-schema-form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Field, FieldGroup } from "./ui/field";
 import { Button } from "./ui/button";
@@ -61,7 +61,7 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
           }}
         >
           <FieldGroup>
-            <RenderJsonSchema form={form as unknown as FormApi} schema={jsonSchema} />
+            <RenderJsonSchema form={form} schema={jsonSchema} />
           </FieldGroup>
         </form>
       </CardContent>

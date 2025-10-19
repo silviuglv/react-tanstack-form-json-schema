@@ -1,19 +1,11 @@
-import { FC } from "react";
-import { IRenderProps } from "./types";
+import { SchemaRenderer } from "./types";
 import { getFieldProps } from "./utils";
 
-interface RenderFieldProps extends IRenderProps {
+export const RenderField: SchemaRenderer<{
   pathPrefix: string;
   fieldType: string;
-}
-
-export const RenderField: FC<RenderFieldProps> = ({
-  fieldType,
-  form,
-  schema,
-  pathPrefix,
-  required,
-}) => {
+  required?: boolean;
+}> = ({ fieldType, form, schema, pathPrefix, required }) => {
   const fieldProps = getFieldProps(schema, required);
 
   return (

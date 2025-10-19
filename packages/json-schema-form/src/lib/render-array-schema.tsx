@@ -1,11 +1,10 @@
-import { IRenderProps, JSONSchemaArray } from "./types";
+import { JSONSchemaArray, SchemaRenderer } from "./types";
 import { RenderJsonSchema } from "./render-json-schema";
 
-interface RenderJsonArrayProps extends IRenderProps {
-  schema: JSONSchemaArray;
-}
-
-export const RenderArrayObject = ({ form, schema, pathPrefix, required }: RenderJsonArrayProps) => {
+export const RenderArrayObject: SchemaRenderer<
+  { pathPrefix?: string; required?: boolean },
+  JSONSchemaArray
+> = ({ form, schema, pathPrefix, required }) => {
   const { items } = schema;
 
   if (!items) {

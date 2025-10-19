@@ -1,12 +1,12 @@
-import { IRenderProps, JSONSchemaObject } from "./types";
+import { JSONSchemaObject, SchemaRenderer } from "./types";
 import { getPathPrefix } from "./utils";
 import { RenderJsonSchema } from "./render-json-schema";
 
-interface RenderJsonObjectProps extends IRenderProps {
-  schema: JSONSchemaObject;
-}
-
-export const RenderJsonObject = ({ form, schema, pathPrefix }: RenderJsonObjectProps) => {
+export const RenderJsonObject: SchemaRenderer<{ pathPrefix?: string }, JSONSchemaObject> = ({
+  form,
+  schema,
+  pathPrefix,
+}) => {
   const { properties = {}, required = [] } = schema;
 
   if (!properties) {
