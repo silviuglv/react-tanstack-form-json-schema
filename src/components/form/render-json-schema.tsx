@@ -1,6 +1,6 @@
 import { Fragment, type ComponentType } from "react";
 import { withForm } from "./form-base";
-import type { FieldConfig, JSONSchema } from "./form-utils";
+import { createFieldProps, type FieldConfig, type JSONSchema } from "./form-utils";
 import type { AnyFieldApi } from "@tanstack/form-core";
 
 const getFieldName = (path: string, prefix?: string) => {
@@ -25,11 +25,7 @@ const createFieldConfig = (
   return {
     fieldName,
     fieldType,
-    fieldProps: {
-      label: schema.title,
-      description: schema.description,
-      required: required ?? false,
-    },
+    fieldProps: createFieldProps(schema, required),
   };
 };
 
@@ -76,6 +72,7 @@ const collectFieldConfigs = (
 };
 
 export const RenderJsonSchema = withForm({
+  defaultValues: {},
   props: {
     schema: null as JSONSchema | null,
   },
@@ -90,7 +87,6 @@ export const RenderJsonSchema = withForm({
             name={fieldName}
             children={(field) => {
               const Component = getComponent(field, fieldType);
-
               return <Component {...fieldProps} />;
             }}
           />

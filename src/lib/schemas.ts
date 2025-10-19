@@ -6,7 +6,10 @@ export const bugReport = z
       .string()
       .min(5, "Bug title must be at least 5 characters.")
       .max(32, "Bug title must be at most 32 characters.")
-      .meta({ title: "Bug Title" }),
+      .meta({
+        title: "Bug Title",
+        examples: ["Login button not working on mobile"],
+      }),
     description: z
       .string()
       .min(20, "Description must be at least 20 characters.")
@@ -14,6 +17,7 @@ export const bugReport = z
       .meta({
         title: "Description",
         description: "Include steps to reproduce, expected behavior, and what actually happened.",
+        "x-field-type": "TextareaField",
         "x-field-options": { placeholder: "I'm having an issue with the login button on mobile." },
       }),
   })

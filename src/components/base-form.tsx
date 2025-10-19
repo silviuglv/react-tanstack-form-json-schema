@@ -8,6 +8,7 @@ import { RenderJsonSchema } from "./form/render-json-schema";
 
 export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schema }) => {
   const form = useAppForm({
+    defaultValues: {},
     onSubmit: ({ value }) => {
       alert(JSON.stringify(value, null, 2));
     },
@@ -15,6 +16,7 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
       onSubmit: schema,
     },
   });
+
   const meta = schema.meta();
   const jsonSchema = z.toJSONSchema(schema);
 
@@ -22,9 +24,7 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
     <Card className="w-full sm:max-w-md">
       <CardHeader>
         {meta?.title ? <CardTitle>{meta?.title}</CardTitle> : null}
-        {meta?.description ? (
-          <CardDescription>Help us improve by reporting bugs you encounter.</CardDescription>
-        ) : null}
+        {meta?.description ? <CardDescription>{meta.description}</CardDescription> : null}
       </CardHeader>
       <CardContent>
         <form

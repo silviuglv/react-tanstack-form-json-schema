@@ -1,4 +1,36 @@
-export type BooleanOrSchema = boolean | JSONSchema;
+import type { HTMLInputTypeAttribute } from "react";
+/**
+ * https://www.learnjsonschema.com/2020-12
+ */
+
+export type FormatAnnotation =
+  | string
+  | "date-time"
+  | "date"
+  | "time"
+  | "duration"
+  | "email"
+  | "idn-email"
+  | "hostname"
+  | "idn-hostname"
+  | "ipv4"
+  | "ipv6"
+  | "uri"
+  | "uri-reference"
+  | "iri"
+  | "iri-reference"
+  | "uuid"
+  | "uri-template"
+  | "json-pointer"
+  | "relative-json-pointer"
+  | "regex";
+
+export type FormCustomAnnotations = {
+  "x-field-type"?: string;
+  "x-field-options"?: Record<string, unknown>;
+};
+
+type BooleanOrSchema = boolean | JSONSchema;
 
 type JSONSchemaBase = {
   [k: string]: unknown;
@@ -61,16 +93,11 @@ type JSONSchemaBase = {
   writeOnly?: boolean;
   nullable?: boolean;
   examples?: unknown[];
-  format?: string;
+  format?: FormatAnnotation;
   contentMediaType?: string;
   contentEncoding?: string;
   contentSchema?: JSONSchema;
   _prefault?: unknown;
-};
-
-export type FormCustomAnnotations = {
-  "x-field-type"?: string;
-  "x-field-options"?: Record<string, unknown>;
 };
 
 export type JSONSchema = JSONSchemaBase & FormCustomAnnotations;
@@ -79,4 +106,56 @@ export type FieldConfig = {
   fieldType: string;
   fieldName: string;
   fieldProps: Record<string, unknown>;
+};
+
+export const mapFormatToInputType = (annotation?: FormatAnnotation): HTMLInputTypeAttribute => {
+  switch (annotation) {
+    case "date":
+      return "date";
+    case "date-time":
+      return "datetime-local";
+    case "email":
+    case "idn-email":
+      return "email";
+    case "time":
+      return "time";
+    case "uri":
+      return "url";
+    default:
+      return "text";
+  }
+};
+
+export const createFieldProps = (schema: JSONSchema, required?: boolean) => {
+  const props = {
+    label: schema.title,
+    description: schema.description,
+    required: required,
+    defaultValue: schema.default,
+    readOnly: schema.readOnly,
+    writeOnly: schema.writeOnly,
+    schema: schema,
+    placeholder: schema["x-field-options"]?.placeholder ?? schema.examples?.[0] ?? undefined,
+    ...(schema["x-field-options"] ?? {}),
+  };
+
+  if (schema.type === "string") {
+    return {
+      ...props,
+      type: mapFormatToInputType(schema.format),
+      minLength: schema.minLength,
+      maxLength: schema.maxLength,
+      pattern: schema.pattern,
+    };
+  }
+
+  if (schema.type === "number") {
+    return {
+      ...props,
+      min: schema.minimum,
+      max: schema.maximum,
+    };
+  }
+
+  return props;
 };

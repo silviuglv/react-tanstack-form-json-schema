@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AppFieldExtendedReactFormApi } from "@tanstack/react-form";
 import { ComponentType } from "react";
 
 /**
