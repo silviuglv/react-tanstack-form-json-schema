@@ -1,36 +1,10 @@
 import type { FC, PropsWithChildren } from "react";
-import { createFormHook } from "@tanstack/react-form";
-import { fieldContext, formContext, useFormContext } from "./context/form-context";
 import z from "zod";
-import { RenderJsonSchema, type FormApi, type JSONSchema } from "@repo/json-schema-form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Field, FieldGroup } from "./ui/field";
 import { Button } from "./ui/button";
-import { TextField } from "./fields/text-field";
-
-function SubscribeButton({ label }: { label: string }) {
-  const form = useFormContext();
-  return (
-    <form.Subscribe selector={(state) => state.isSubmitting}>
-      {(isSubmitting) => (
-        <button type="submit" disabled={isSubmitting}>
-          {label}
-        </button>
-      )}
-    </form.Subscribe>
-  );
-}
-
-const { useAppForm } = createFormHook({
-  fieldContext,
-  formContext,
-  fieldComponents: {
-    TextField,
-  },
-  formComponents: {
-    SubscribeButton,
-  },
-});
+import { useAppForm } from "./form/form-base";
+import { RenderJsonSchema } from "./form/render-json-schema";
 
 export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schema }) => {
   const form = useAppForm({
@@ -42,7 +16,7 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
     },
   });
   const meta = schema.meta();
-  const jsonSchema = z.toJSONSchema(schema) as JSONSchema;
+  const jsonSchema = z.toJSONSchema(schema);
 
   return (
     <Card className="w-full sm:max-w-md">
@@ -61,7 +35,7 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
           }}
         >
           <FieldGroup>
-            <RenderJsonSchema form={form as unknown as FormApi} schema={jsonSchema} />
+            <RenderJsonSchema form={form} schema={jsonSchema} />
           </FieldGroup>
         </form>
       </CardContent>

@@ -4,7 +4,7 @@ import { RenderJsonObject } from "./render-object-schema";
 import { RenderJsonPrimitive } from "./render-json-primitive";
 import { RenderArrayObject } from "./render-array-schema";
 
-export function RenderJsonSchema(props: IRenderProps) {
+export function RenderJsonSchema(props: NoInfer<IRenderProps>) {
   const { form, schema, ...options } = props;
 
   if (schema["x-field-type"] && options.pathPrefix) {

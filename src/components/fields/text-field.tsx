@@ -1,9 +1,10 @@
 import type { HTMLInputTypeAttribute } from "react";
 import { useStore } from "@tanstack/react-form";
-import { useFieldContext } from "../context/form-context";
+
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import type { IFieldProps } from "./field-base";
+import { useFieldContext } from "../form/form-context";
 
 interface TextFieldProps extends IFieldProps {
   type?: HTMLInputTypeAttribute;
