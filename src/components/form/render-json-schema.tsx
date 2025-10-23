@@ -12,6 +12,7 @@ const getComponent = (fieldApi: AnyFieldApi, fieldType: string): ComponentType =
   if (fieldType in fieldApi && typeof fieldApi[fieldType as keyof typeof fieldApi] === "function") {
     return fieldApi[fieldType as keyof typeof fieldApi] as ComponentType;
   }
+
   console.warn(`Field component "${fieldType}" not found.`);
   return Fragment;
 };

@@ -1,30 +1,30 @@
 import type { FC, PropsWithChildren } from "react";
-import z from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Field, FieldGroup } from "./ui/field";
 import { Button } from "./ui/button";
 import { useAppForm } from "./form/form-base";
 import { RenderJsonSchema } from "./form/render-json-schema";
+import type { JSONSchema } from "./form/form-utils";
+import { OnChangeHandler } from "./form/on-change-handler";
 
-export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schema }) => {
+export const BaseForm: FC<
+  PropsWithChildren<{
+    schema: JSONSchema;
+    onChange: (values: Record<string, unknown>) => void;
+  }>
+> = ({ schema, onChange }) => {
   const form = useAppForm({
     defaultValues: {},
     onSubmit: ({ value }) => {
       alert(JSON.stringify(value, null, 2));
     },
-    validators: {
-      onSubmit: schema,
-    },
   });
-
-  const meta = schema.meta();
-  const jsonSchema = z.toJSONSchema(schema);
 
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
-        {meta?.title ? <CardTitle>{meta?.title}</CardTitle> : null}
-        {meta?.description ? <CardDescription>{meta.description}</CardDescription> : null}
+        {schema?.title ? <CardTitle>{schema?.title}</CardTitle> : null}
+        {schema?.description ? <CardDescription>{schema.description}</CardDescription> : null}
       </CardHeader>
       <CardContent>
         <form
@@ -35,10 +35,14 @@ export const BaseForm: FC<PropsWithChildren<{ schema: z.ZodObject }>> = ({ schem
           }}
         >
           <FieldGroup>
-            <RenderJsonSchema form={form} schema={jsonSchema} />
+            <RenderJsonSchema form={form} schema={schema} />
           </FieldGroup>
+          <form.AppForm>
+            <OnChangeHandler onChange={onChange} />
+          </form.AppForm>
         </form>
       </CardContent>
+
       <CardFooter>
         <Field orientation="horizontal">
           <Button type="button" variant="outline" onClick={() => form.reset()}>
