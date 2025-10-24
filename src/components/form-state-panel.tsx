@@ -49,7 +49,7 @@ export const FormStatePanel = ({ state }: { state: Record<string, unknown> }) =>
         <div className="flex h-full flex-col border-t border-border">
           <FormStatePanelHeader collapsed={collapsed} toggleCollapsed={toggle} />
           <div className="flex-1 relative">
-            <JSONEditor value={JSON.stringify(state)} readOnly />
+            <JSONEditor value={JSON.stringify(state, null, 2)} readOnly />
           </div>
         </div>
       </ResizablePanel>

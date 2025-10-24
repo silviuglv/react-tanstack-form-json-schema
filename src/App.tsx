@@ -13,7 +13,7 @@ function App() {
   const [jsonInput, setJsonInput] = useState(() =>
     JSON.stringify(z.toJSONSchema(bugReport), null, 2)
   );
-  const [formValues, setFormValues] = useState<Record<string, unknown>>({ name: "user" });
+  const [formValues, setFormValues] = useState<Record<string, unknown>>({});
 
   let schema;
 

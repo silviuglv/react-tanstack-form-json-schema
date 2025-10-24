@@ -133,8 +133,6 @@ export const createFieldProps = (schema: JSONSchema, required?: boolean) => {
     required: required,
     defaultValue: schema.default,
     readOnly: schema.readOnly,
-    writeOnly: schema.writeOnly,
-    // schema: schema,
     placeholder: schema["x-field-options"]?.placeholder ?? schema.examples?.[0] ?? undefined,
     ...(schema["x-field-options"] ?? {}),
   };
