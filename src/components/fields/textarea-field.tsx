@@ -8,14 +8,12 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
+import type { ComponentProps } from "react";
 
-interface TextareaFieldProps extends IFieldProps {
-  minLength?: string;
-  maxLength?: string;
-}
+interface TextareaFieldProps extends IFieldProps, ComponentProps<"textarea"> {}
 
 export function TextareaField(props: TextareaFieldProps) {
-  const { label, description, placeholder, maxLength } = props;
+  const { label, description, placeholder, maxLength, ...rest } = props;
 
   const field = useFieldContext<string>();
   const meta = useStore(field.store, (state) => state.meta);
@@ -36,6 +34,8 @@ export function TextareaField(props: TextareaFieldProps) {
           rows={6}
           className="min-h-24 resize-none"
           aria-invalid={isInvalid}
+          maxLength={maxLength}
+          {...rest}
         />
         {maxLength ? (
           <InputGroupAddon align="block-end">

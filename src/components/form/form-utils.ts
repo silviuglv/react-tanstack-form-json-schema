@@ -134,7 +134,7 @@ export const createFieldProps = (schema: JSONSchema, required?: boolean) => {
     defaultValue: schema.default,
     readOnly: schema.readOnly,
     writeOnly: schema.writeOnly,
-    schema: schema,
+    // schema: schema,
     placeholder: schema["x-field-options"]?.placeholder ?? schema.examples?.[0] ?? undefined,
     ...(schema["x-field-options"] ?? {}),
   };
@@ -152,6 +152,7 @@ export const createFieldProps = (schema: JSONSchema, required?: boolean) => {
   if (schema.type === "number") {
     return {
       ...props,
+      type: "number",
       min: schema.minimum,
       max: schema.maximum,
     };

@@ -20,6 +20,9 @@ export const bugReport = z
         "x-field-type": "TextareaField",
         "x-field-options": { placeholder: "I'm having an issue with the login button on mobile." },
       }),
+    points: z.number().meta({
+      title: "Points",
+    }),
   })
   .meta({
     title: "Bug Report",
