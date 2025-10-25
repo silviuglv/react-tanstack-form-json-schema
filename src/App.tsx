@@ -1,13 +1,13 @@
 import "./index.css";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import z from "zod";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./components/ui/resizable";
 import { bugReport } from "./lib/schemas";
-import { BaseForm } from "./components/base-form";
 import { FormStatePanel } from "./components/form-state-panel";
 import { SchemaPanel } from "./components/schema-panel";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
+import { BaseForm } from "./components/form/base-form";
 
 function App() {
   const [jsonInput, setJsonInput] = useState(() =>
@@ -49,7 +49,9 @@ function App() {
                     </div>
                   ) : (
                     <div className="my-10 w-full flex items-center justify-center">
-                      <BaseForm schema={schema} onChange={setFormValues} />
+                      <Suspense>
+                        <BaseForm schema={schema} onChange={setFormValues} />
+                      </Suspense>
                     </div>
                   )}
                 </div>

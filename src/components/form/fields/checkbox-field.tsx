@@ -1,5 +1,5 @@
 import { useStore } from "@tanstack/react-form";
-import { useFieldContext } from "../form/form-context";
+import { useFieldContext } from "../form-context";
 import {
   Field,
   FieldContent,
@@ -9,9 +9,9 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "../ui/field";
+} from "../../ui/field";
 import type { IFieldProps } from "./field-base";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "../../ui/checkbox";
 
 interface CheckboxFieldSingleProps extends IFieldProps {
   type: "single";
@@ -78,7 +78,9 @@ function CheckboxFieldMultiple(props: CheckboxFieldMultipleProps) {
   );
 }
 
-export function CheckboxField(props: CheckboxFieldSingleProps | CheckboxFieldMultipleProps) {
+export default function CheckboxField(
+  props: CheckboxFieldSingleProps | CheckboxFieldMultipleProps
+) {
   const { type } = props;
 
   const field = useFieldContext<unknown>();

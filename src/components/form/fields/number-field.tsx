@@ -1,7 +1,7 @@
 import { useStore } from "@tanstack/react-form";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "../../ui/field";
 import type { IFieldProps } from "./field-base";
-import { useFieldContext } from "../form/form-context";
+import { useFieldContext } from "../../form/form-context";
 import {
   InputGroup,
   InputGroupAddon,
@@ -15,7 +15,7 @@ interface NumberFieldProps extends IFieldProps, ComponentProps<"input"> {
   type: "numeric" | "decimal";
 }
 
-export function NumberField(props: NumberFieldProps) {
+export default function NumberField(props: NumberFieldProps) {
   const { label, description, placeholder, type, ...rest } = props;
 
   const field = useFieldContext<number>();

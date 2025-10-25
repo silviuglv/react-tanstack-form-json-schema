@@ -41,6 +41,7 @@ export const FormStatePanel = ({ state }: { state: Record<string, unknown> }) =>
       <ResizableHandle withHandle />
       <ResizablePanel
         id="state-panel"
+        order={2}
         collapsible
         onCollapse={() => setCollapsed(true)}
         defaultSize={25}

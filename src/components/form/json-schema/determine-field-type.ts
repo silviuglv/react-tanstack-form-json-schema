@@ -1,4 +1,4 @@
-import type { JSONSchema } from "./form-utils";
+import type { JSONSchema } from "./json-schema-utils";
 
 /**
  * Field mappings configuration
@@ -137,7 +137,7 @@ function resolveMapping(mappings: FieldMappings, keys: string[]): string {
 
 /**
  * Build cascading keys from parts
- * Example: buildKeys(["string", "date", "small"])
+ * @example buildKeys(["string", "date", "small"])
  * Returns: ["string:date:small", "string:date", "string"]
  */
 function buildKeys(parts: string[]): string[] {
@@ -185,11 +185,7 @@ export function determineFieldType(
   schema: JSONSchema,
   config: FieldTypeDeterminatorConfig = {}
 ): string {
-  const {
-    fieldMappings: customMappings = {},
-    enumThreshold = 5,
-    textareaThreshold = 100,
-  } = config;
+  const { fieldMappings: customMappings = {}, enumThreshold = 5, textareaThreshold = 100 } = config;
 
   // Merge custom mappings with defaults (custom overrides defaults)
   const mappings: FieldMappings = { ...DEFAULT_FIELD_MAPPINGS, ...customMappings };

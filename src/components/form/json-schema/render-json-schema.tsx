@@ -1,6 +1,6 @@
 import { Fragment, type ComponentType } from "react";
-import { withForm } from "./form-base";
-import { createFieldProps, type FieldConfig, type JSONSchema } from "./form-utils";
+import { withForm } from "../form-context";
+import { createFieldProps, type FieldConfig, type JSONSchema } from "./json-schema-utils";
 import type { AnyFieldApi } from "@tanstack/form-core";
 
 const getFieldName = (path: string, prefix?: string) => {
@@ -9,7 +9,7 @@ const getFieldName = (path: string, prefix?: string) => {
 };
 
 const getComponent = (fieldApi: AnyFieldApi, fieldType: string): ComponentType => {
-  if (fieldType in fieldApi && typeof fieldApi[fieldType as keyof typeof fieldApi] === "function") {
+  if (fieldType in fieldApi) {
     return fieldApi[fieldType as keyof typeof fieldApi] as ComponentType;
   }
 

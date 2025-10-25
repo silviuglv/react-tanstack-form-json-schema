@@ -1,18 +1,18 @@
+import type { ComponentProps } from "react";
 import { useStore } from "@tanstack/react-form";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
-import type { IFieldProps } from "./field-base";
-import { useFieldContext } from "../form/form-context";
+import { useFieldContext } from "@/components/form/form-context";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
-import type { ComponentProps } from "react";
+import type { IFieldProps } from "./field-base";
 
 interface TextareaFieldProps extends IFieldProps, ComponentProps<"textarea"> {}
 
-export function TextareaField(props: TextareaFieldProps) {
+export default function TextareaField(props: TextareaFieldProps) {
   const { label, description, placeholder, maxLength, ...rest } = props;
 
   const field = useFieldContext<string>();

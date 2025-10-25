@@ -1,8 +1,14 @@
-import type { IFieldProps } from "./field-base";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
-import { useFieldContext } from "../form/form-context";
 import { useStore } from "@tanstack/react-form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useFieldContext } from "@/components/form/form-context";
+import type { IFieldProps } from "./field-base";
 
 interface SelectFieldProps extends IFieldProps {
   options: {
@@ -11,7 +17,7 @@ interface SelectFieldProps extends IFieldProps {
   }[];
 }
 
-export function SelectField(props: SelectFieldProps) {
+export default function SelectField(props: SelectFieldProps) {
   const { label, description, placeholder, options } = props;
 
   const field = useFieldContext<string>();
